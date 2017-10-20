@@ -19,9 +19,9 @@
 -- Current Database: `intranet`
 --
 
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `intranet` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 
-
-USE `octagono_intranet`;
+USE `intranet`;
 
 --
 -- Table structure for table `intranet_assigned_project`
@@ -68,7 +68,7 @@ CREATE TABLE `intranet_assigned_task` (
   KEY `task_id` (`task_id`),
   CONSTRAINT `intranet_assigned_task_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `intranet_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `intranet_assigned_task_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `intranet_task` (`task_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE `intranet_assigned_task` (
 
 LOCK TABLES `intranet_assigned_task` WRITE;
 /*!40000 ALTER TABLE `intranet_assigned_task` DISABLE KEYS */;
-INSERT INTO `intranet_assigned_task` VALUES (1,1,6),(2,2,6),(3,3,6),(4,5,6),(6,5,8),(7,6,6),(9,6,8),(10,1,13);
+INSERT INTO `intranet_assigned_task` VALUES (1,1,6),(2,2,6),(3,3,6),(4,5,6),(6,5,8),(7,6,6),(9,6,8),(10,1,13),(11,7,14),(12,7,15);
 /*!40000 ALTER TABLE `intranet_assigned_task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,7 +122,7 @@ CREATE TABLE `intranet_note` (
   PRIMARY KEY (`note_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `intranet_note_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `intranet_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,7 +131,7 @@ CREATE TABLE `intranet_note` (
 
 LOCK TABLES `intranet_note` WRITE;
 /*!40000 ALTER TABLE `intranet_note` DISABLE KEYS */;
-INSERT INTO `intranet_note` VALUES (1,'nota divina',1,'2017-06-01',6),(2,'vou chegar atrasado !',1,'2017-06-13',6),(3,'nota universal',2,'2017-07-26',6),(4,'nota pessoal 1',1,'2017-07-24',6),(5,'dassd',2,'2017-06-27',6);
+INSERT INTO `intranet_note` VALUES (1,'nota divina',1,'2017-06-01',6),(2,'vou chegar atrasado !',1,'2017-06-13',6),(3,'nota universal',2,'2017-07-26',6),(4,'nota pessoal 1',1,'2017-07-24',6),(5,'dassd',2,'2017-06-27',6),(6,'Ã§Ã§',1,'2017-08-09',6);
 /*!40000 ALTER TABLE `intranet_note` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,7 +159,7 @@ CREATE TABLE `intranet_project` (
 
 LOCK TABLES `intranet_project` WRITE;
 /*!40000 ALTER TABLE `intranet_project` DISABLE KEYS */;
-INSERT INTO `intranet_project` VALUES (1,'Restaurante','2017-06-06','2017-08-08','ss',1),(4,'Escola','2017-06-07','2017-07-10','',2),(5,'Bombeiros','2017-06-08','2017-08-10','ss',1),(6,'Pastelaria','2017-06-10','2017-07-12','projecto pastelaria',1),(7,'Tenis','2017-06-12','2017-07-12','website tenis',2),(8,'Igreja','2017-08-01','2017-08-03','stuff',1);
+INSERT INTO `intranet_project` VALUES (1,'Restaurante','2017-06-06','2017-08-08','ss',1),(4,'Escola','2017-06-07','2017-07-10','',2),(5,'Bombeiros','2017-06-08','2017-08-10','ss',2),(6,'Pastelaria','2017-06-10','2017-07-12','projecto pastelaria',1),(7,'Tenis','2017-06-12','2017-07-12','website tenis',2),(8,'Igreja','2017-08-01','2017-08-03','stuff',1);
 /*!40000 ALTER TABLE `intranet_project` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +181,7 @@ CREATE TABLE `intranet_task` (
   PRIMARY KEY (`task_id`),
   KEY `project_id` (`project_id`),
   CONSTRAINT `intranet_task_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `intranet_project` (`project_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +190,7 @@ CREATE TABLE `intranet_task` (
 
 LOCK TABLES `intranet_task` WRITE;
 /*!40000 ALTER TABLE `intranet_task` DISABLE KEYS */;
-INSERT INTO `intranet_task` VALUES (1,'login restaurante','2017-06-09','2017-06-10',1,'such login',1),(2,'login escola','2017-06-08','2017-06-08',4,NULL,2),(3,'login bombeiros','2017-06-08','2017-06-09',5,NULL,1),(5,'newsletter restaurante','2017-06-22','2017-06-30',1,'muito importante',2),(6,'login pastelaria','2017-07-10','2017-07-21',6,'mui importante',2);
+INSERT INTO `intranet_task` VALUES (1,'login restaurante','2017-06-09','2017-06-10',1,'such login',2),(2,'login escola','2017-06-08','2017-06-08',4,NULL,2),(3,'login bombeiros','2017-06-08','2017-06-09',5,NULL,1),(5,'newsletter restaurante','2017-06-22','2017-06-30',1,'muito importante',2),(6,'login pastelaria','2017-07-10','2017-07-21',6,'mui importante',2),(7,'sa','2017-10-10','2017-10-20',1,'ad',1);
 /*!40000 ALTER TABLE `intranet_task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +242,7 @@ CREATE TABLE `intranet_vacation` (
   PRIMARY KEY (`vacation_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `intranet_vacation_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `intranet_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,7 +251,7 @@ CREATE TABLE `intranet_vacation` (
 
 LOCK TABLES `intranet_vacation` WRITE;
 /*!40000 ALTER TABLE `intranet_vacation` DISABLE KEYS */;
-INSERT INTO `intranet_vacation` VALUES (44,'2017-06-05','2017-06-05',6),(45,'2017-06-28','2017-06-30',6),(46,'2017-07-13','2017-07-13',6),(47,'2017-07-27','2017-07-27',6),(49,'2017-07-19','2017-07-22',6),(50,'2018-07-17','2018-07-22',6),(51,'2017-07-23','2017-07-25',8),(53,'2017-08-14','2017-08-18',6),(54,'2017-01-16','2017-01-18',6),(56,'2017-07-31','2017-08-01',6),(58,'2017-10-23','2017-10-27',8),(59,'2017-09-20','2017-09-22',20),(60,'2017-12-31','2018-01-01',6);
+INSERT INTO `intranet_vacation` VALUES (44,'2017-06-05','2017-06-05',6),(45,'2017-06-28','2017-06-30',6),(47,'2017-07-27','2017-07-27',6),(49,'2017-07-19','2017-07-22',6),(50,'2018-07-17','2018-07-22',6),(51,'2017-07-23','2017-07-25',8),(53,'2017-08-14','2017-08-18',6),(54,'2017-01-16','2017-01-18',6),(56,'2017-07-31','2017-08-01',6),(58,'2017-10-23','2017-10-27',8),(59,'2017-09-20','2017-09-22',20),(60,'2017-12-31','2018-01-01',6),(61,'2018-01-10','2018-01-12',6),(62,'2017-12-31','2018-01-02',20),(63,'2017-12-28','2018-01-04',21),(65,'2017-08-03','2017-08-12',13);
 /*!40000 ALTER TABLE `intranet_vacation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,7 +275,7 @@ CREATE TABLE `intranet_wiki_article` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `intranet_wiki_article_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `intranet_wiki_category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `intranet_wiki_article_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `intranet_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -284,7 +284,7 @@ CREATE TABLE `intranet_wiki_article` (
 
 LOCK TABLES `intranet_wiki_article` WRITE;
 /*!40000 ALTER TABLE `intranet_wiki_article` DISABLE KEYS */;
-INSERT INTO `intranet_wiki_article` VALUES (6,'Company policy about web marketing','Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',2,6,'2017-05-29 13:03:56','2017-07-19 13:04:16'),(7,'Facebook marketing','Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',2,6,'2017-05-29 13:03:56',NULL),(8,'How to make a marketing plan','Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',2,6,'2017-05-29 13:03:56',NULL),(26,'Common installation problems','Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',5,6,'2017-05-29 13:07:02',NULL),(27,'Company information','Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',5,6,'2017-05-29 13:07:02',NULL),(28,'Documentation','Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',5,6,'2017-05-29 13:07:02',NULL),(29,'Installing wordpress','Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',5,6,'2017-05-29 13:07:03',NULL),(50,'help2guide','guidemega',11,6,'2017-06-01 16:14:11',NULL),(51,'Helpsmvc','hold my beer',11,6,'2017-06-02 12:04:48',NULL),(52,'beer','love myself some beerss',11,6,'2017-06-02 12:06:42','2017-07-20 10:57:28'),(53,'marketingstuff','important!',2,6,'2017-06-02 12:58:28','2017-06-27 10:58:56'),(54,'helpingstuff','important help stuff',11,6,'2017-06-02 12:58:51',NULL),(55,'adas','dsadas',11,6,'2017-06-19 16:07:43',NULL),(56,'drup1','dasd',12,6,'2017-07-03 17:31:50',NULL),(57,'drup2','dafa',2,6,'2017-07-03 17:31:54',NULL),(58,'drup3','gfsdfsd',2,6,'2017-07-03 17:31:58',NULL),(59,'drup4g','gfsd',2,6,'2017-07-03 17:32:01',NULL),(61,'fsf','aaaa',12,6,'2017-07-03 17:32:32',NULL),(62,'fsfddd','fsewq',12,6,'2017-07-03 17:32:38',NULL),(64,'wwwquatro','das',12,6,'2017-07-28 16:33:27',NULL);
+INSERT INTO `intranet_wiki_article` VALUES (6,'Company policy about web marketing','Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',2,6,'2017-05-29 13:03:56','2017-07-19 13:04:16'),(7,'Facebook marketing','Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',2,6,'2017-05-29 13:03:56',NULL),(8,'How to make a marketing plan','Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',2,6,'2017-05-29 13:03:56',NULL),(26,'Common installation problems','Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',5,6,'2017-05-29 13:07:02',NULL),(27,'Company information','Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',5,6,'2017-05-29 13:07:02',NULL),(28,'Documentation','Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',5,6,'2017-05-29 13:07:02',NULL),(29,'Installing wordpress','Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',5,6,'2017-05-29 13:07:03',NULL),(50,'help2guide','guidemega',11,6,'2017-06-01 16:14:11',NULL),(51,'Helpsmvc','hold my beer',11,6,'2017-06-02 12:04:48',NULL),(52,'beer','love myself some beerss',11,6,'2017-06-02 12:06:42','2017-07-20 10:57:28'),(54,'helpingstuff','important help stuff',11,6,'2017-06-02 12:58:51',NULL),(55,'adas','dsadas',11,6,'2017-06-19 16:07:43',NULL),(56,'drup1','dasd',12,6,'2017-07-03 17:31:50',NULL),(57,'drup2','dafa',2,6,'2017-07-03 17:31:54',NULL),(58,'drup3','gfsdfsd',2,6,'2017-07-03 17:31:58',NULL),(59,'drup4g','gfsd',2,6,'2017-07-03 17:32:01',NULL),(61,'fsf','aaaa',12,6,'2017-07-03 17:32:32',NULL),(62,'fsfddd','fsewq',12,6,'2017-07-03 17:32:38',NULL),(64,'wwwquatro','das',12,6,'2017-07-28 16:33:27',NULL),(65,'drupcinco','sss',12,6,'2017-08-01 17:14:57',NULL);
 /*!40000 ALTER TABLE `intranet_wiki_article` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -321,4 +321,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-01 15:59:38
+-- Dump completed on 2017-10-20 18:04:42
