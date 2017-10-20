@@ -1,0 +1,517 @@
+body, html {
+    font-family: 'Open Sans Condensed', sans-serif;
+    background-color: #34515E;
+    color: white;
+
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+.main {
+    min-height: 90%;
+    background-color: #34515E;
+    color: white;
+    padding: 0;
+}
+
+
+#signup-container {
+    width: 50%;
+    margin: 0 auto;
+
+}
+
+#register-button {
+    background-color: yellowgreen;
+    color: white;
+    border: none; !important;
+
+}
+
+#register-button:hover {
+   background-color: darkolivegreen;
+
+}
+
+#submit-login {
+    background-color: yellowgreen;
+    color: white;
+    border: none; !important;
+}
+
+#submit-login:hover {
+    background-color: darkolivegreen;
+}
+
+.confirm-btn {
+    background-color: yellowgreen;
+    color: white;
+    border: none; !important;
+
+}
+
+.confirm-btn:hover {
+    background-color: darkolivegreen;
+}
+
+.signup-error {
+    text-align: center;
+}
+
+
+/* BOOTSTRAP 4 CHANGES */
+.bg-success {
+    background-color: #5cb85c !important;
+}
+.bg-info {
+    background-color: #5bc0de !important;
+}
+.bg-warning {
+    background-color: #f0ad4e !important;
+}
+.bg-danger {
+    background-color: #d9534f !important;
+}
+
+/* LINK CSS */
+a{
+    color: whitesmoke;
+
+}
+
+a:hover {
+    color: yellowgreen;
+    text-decoration: none;
+}
+
+.category-link:hover {
+    color: yellowgreen;
+}
+
+
+/* LAYOUT(?) CLASSES */
+.mt-2 {  margin-top: 2rem !important;  }
+.mt-3 {  margin-top: 3rem !important;  }
+.mt-4 {  margin-top: 4rem !important;  }
+.mt-5 {  margin-top: 5rem !important;  }
+.mt-6 {  margin-top: 6rem !important;  }
+.mt-7 {  margin-top: 7rem !important;  }
+.mt-8 {  margin-top: 8rem !important;  }
+.mt-9 {  margin-top: 9rem !important;  }
+.mt-10 {  margin-top: 10rem !important;  }
+
+.mb-2 {  margin-bottom: 2rem !important; }
+.mb-3 {  margin-bottom: 3rem !important;  }
+.mb-4 {  margin-bottom: 4rem !important;  }
+.mb-5 {  margin-bottom: 5rem !important;  }
+.mb-6 {  margin-bottom: 6rem !important;  }
+
+.ml-2 {  margin-left: 2rem !important;  }
+.ml-3 {  margin-left: 3rem !important;  }
+.ml-4 {  margin-left: 4rem !important;  }
+.ml-5 {  margin-left: 5rem !important;  }
+.ml-6 {  margin-left: 6rem !important;  }
+
+.mr-2 {  margin-right: 2rem !important;  }
+.mr-3 {  margin-right: 3rem !important;  }
+.mr-4 {  margin-right: 4rem !important;  }
+.mr-5 {  margin-right: 5rem !important;  }
+.mr-6 {  margin-right: 6rem !important;  }
+.mr-7 {  margin-right: 7rem !important;  }
+
+.pt-2 { padding-top: 2rem !important; }
+.pt-3 { padding-top: 3rem !important; }
+.pt-4 { padding-top: 4rem !important; }
+.pt-5 { padding-top: 5rem !important; }
+.pt-6 { padding-top: 6rem !important; }
+
+.pb-2 { padding-bottom: 2rem !important; }
+.pb-3 { padding-bottom: 3rem !important; }
+.pb-4 { padding-bottom: 4rem !important; }
+.pb-5 { padding-bottom: 5rem !important; }
+.pb-6 { padding-bottom: 6rem !important; }
+
+.pl-2 { padding-left: 2rem !important; }
+.pl-3 { padding-left: 3rem !important; }
+.pl-4 { padding-left: 4rem !important; }
+.pl-5 { padding-left: 5rem !important; }
+.pl-6 { padding-left: 6rem !important; }
+
+.pr-2 { padding-right: 2rem !important; }
+.pl-3 { padding-right: 3rem !important;}
+.pl-4 { padding-right: 4rem !important; }
+.pl-5 { padding-right: 5rem !important; }
+.pl-6 { padding-right: 6rem !important; }
+
+/* MISC CSS */
+.red-text {
+    color: red;
+}
+
+.dark-link:hover {
+    color: #1a2129;
+}
+
+.white-text {
+    color: white;
+}
+
+.dashboard-img {
+    width: 100%;
+    height: 190px;
+    margin: 0 auto;
+    border: solid 1px whitesmoke;
+}
+
+.dashboard-list-header {
+    border: solid 1px whitesmoke;
+    border-bottom: none;
+}
+
+.edit-wiki-list {
+    background-color: inherit;
+}
+
+.white-bordered-2 {
+    border-right: solid 1px white;
+    border-left: solid 1px white;
+}
+
+.inactive-manage-link {
+    border: none;
+}
+
+#active-manage-link {
+    background-color: #1A2129;
+    border: none;
+}
+
+.nice-blue-th {
+    background-color: #1a2129;
+}
+
+#top-bar {
+    background-color: #1a2129;
+    margin-top: 0;
+    padding: 0.8rem;
+}
+
+#manage-list {
+    background-color: inherit;
+    margin-top: 2rem;
+}
+
+.pagination>li.active>a {
+    background: #1A2129;
+    color: #fff;
+    border: none;
+}
+
+.pagination>li.active>a:hover {
+    background: #1A2129;
+    color: #fff;
+    border: none;
+}
+
+.pagination>li>a {
+    background: white;
+    color: #1A2129;
+    border: none;
+}
+
+.pagination>li>a:hover {
+    background: yellowgreen;
+    color: #fff;
+    border: none;
+}
+
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.fa-palm-tree:before {
+    content: "\1f334";
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: yellowgreen;
+}
+
+
+
+.bg-yellowgreen {
+    background-color: #33383b;
+    text-align: center;
+}
+
+
+.bg-yellowgreen:hover {
+
+    text-align: center;
+}
+
+#datepicker {
+    color: black;
+}
+
+#datepicker2 {
+    color: black;
+}
+
+/* Glyphicon size classes */
+.gi-2x{font-size: 2rem;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+
+
+/* SEARCH CSS */
+.stylish-input-group .input-group-addon{
+    background: white !important;
+}
+.stylish-input-group .form-control{
+    border-right:0;
+    box-shadow:0 0 0;
+    border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+
+
+/* TABLE STYLE */
+
+.hover-hand {
+    cursor: pointer; cursor: hand;
+}
+
+.manage-table td {
+    text-align: center;
+}
+
+.manage-table th {
+    text-align: center;
+}
+
+.table-icon:hover {
+    color: #1a2129;
+}
+
+.manage-links:hover {
+    background: yellowgreen;
+    color: white;
+}
+
+
+
+/* AJAX LIVE SEARCH CSS BOX YES */
+
+/* Formatting search box */
+.ajax-search-box{
+    width: 100%;
+    position: relative;
+    display: inline-block;
+    font-size: 14px;
+
+}
+
+.search-box-input {
+    color: darkslategray;
+}
+
+.ajax-search-box input[type="text"]{
+    height: 32px;
+    padding: 5px 10px;
+    border: 1px solid #CCCCCC;
+    font-size: 14px;
+}
+
+
+
+.ajax-result{
+    /*position: absolute;*/
+    z-index: 999;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+
+.ajax-search-box input[type="text"], .result {
+
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+
+/* Formatting result items */
+
+.ajax-result p{
+
+    margin: 0;
+    padding: 7px 10px;
+    border: 1px solid #CCCCCC;
+    border-top: none;
+    cursor: pointer;
+    }
+
+.ajax-result p:hover{
+
+    background: yellowgreen;
+
+}
+
+.fa-input {
+    font-family: FontAwesome, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/*******************************************************************************/
+
+/* Bread nav */
+.bread-nav:hover {
+    background-color: yellowgreen;
+
+}
+
+.btn:hover, .btn:focus {
+    background-position: 0 -35px;
+}
+
+/* Label */
+
+.top-label {
+    border-bottom: solid 1px white;
+}
+
+.main-label {
+    background-color: #1A2129;
+    margin: 0;
+    padding: 1.1rem;
+}
+
+.secondary-label {
+    background-color: #1A2129;
+    margin: 0;
+    padding: 0.8rem;
+    width: 100%;
+}
+
+.dropdown-label {
+    background-color: #1A2129;
+    margin: 0;
+    padding: 0.6rem;
+}
+
+#header-span {
+    font-size: medium;
+    margin-top: 1rem;
+    margin-right: 1rem;
+}
+
+
+/* Modal */
+
+
+.modal .modal-dialog {
+    width: 75%;
+}
+
+.modal-img {
+    cursor: pointer;
+
+}
+
+.selected-modal-img {
+    border: 5px solid yellowgreen;
+}
+
+.selection-div {
+    margin-top: 5rem;
+    display: none;
+}
+
+
+/* */
+.alert {
+    /*padding: 20px;*/
+    background-color: #f44336;
+    color: white;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
+
+.calendar-hover:hover {
+    background-color:  #1A2129;
+    /*#33383B*/
+}
+
+
+
+
+/* Notificações */
+
+.dashboard-notification {
+    margin: 0 auto;
+    margin-top: 1rem;
+    width: 90%;
+}
+.dashboard-notification-green {
+    background-color: yellowgreen;
+}
+
+.dashboard-notification-orange {
+    background-color: orange;
+}
+
+.dashboard-notification-red {
+    background-color: #f44336;
+}
+
+
+
+@media screen and (max-width: 640px) {
+    .dashboard-notification{
+        margin-top: 10rem;
+        margin-bottom: -10rem;
+    }
+}
+
+@media screen and (min-width: 1330px) {
+    .modal-content{
+        margin-left: 200px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

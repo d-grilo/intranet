@@ -1,0 +1,381 @@
+/******************************** INITIAL STUFF ***************************************/
+
+CREATE DATABASE IF NOT EXISTS intranet CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+
+GRANT ALL ON intranet.* TO 'intranetuser'@'localhost' IDENTIFIED BY 'intranet123';
+
+
+/**************************************** USER *******************************************/
+
+CREATE TABLE intranet_user (
+user_id INT NOT NULL AUTO_INCREMENT,
+username VARCHAR(45) NOT NULL UNIQUE,
+email VARCHAR(45) NOT NULL UNIQUE,
+birthday DATE NOT NULL,
+password VARCHAR(40) NOT NULL,
+level TINYINT NOT NULL DEFAULT 1,
+PRIMARY KEY(user_id)
+)
+ENGINE = InnoDB;
+
+
+
+/******************************************** WIKI ***************************************/
+
+CREATE TABLE intranet_wiki_category (
+category_id INT NOT NULL AUTO_INCREMENT,
+category_name VARCHAR(45) NOT NULL,
+PRIMARY KEY(category_id)
+)
+ENGINE = InnoDB;
+
+
+CREATE TABLE intranet_wiki_article ( 
+article_id INT NOT NULL AUTO_INCREMENT,
+article_name VARCHAR(45) NOT NULL,
+article_content TEXT NOT NULL,
+category_id INT NOT NULL,
+user_id INT NOT NULL,
+article_creation_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+article_modification_time DATETIME ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY(article_id),
+	FOREIGN KEY(category_id) REFERENCES intranet_wiki_category(category_id)
+		ON DELETE CASCADE
+    	ON UPDATE CASCADE,
+	FOREIGN KEY(user_id) REFERENCES intranet_user(user_id)
+		ON DELETE CASCADE
+       	ON UPDATE CASCADE
+)
+ENGINE = InnoDB;
+
+
+
+/**************************************** PROJECTOS *************************************************/
+
+CREATE TABLE intranet_project (
+project_id INT NOT NULL AUTO_INCREMENT,
+project_name VARCHAR(45) NOT NULL,
+project_start_date DATE,
+project_end_date DATE,
+PRIMARY KEY(project_id)
+)
+ENGINE = InnoDB;
+
+
+CREATE TABLE intranet_assigned_project (
+project_assign_id INT NOT NULL AUTO_INCREMENT,
+project_id INT NOT NULL,
+user_id INT NOT NULL,
+PRIMARY KEY(project_assign_id),
+	FOREIGN KEY(project_id) REFERENCES intranet_project(project_id)
+		ON DELETE CASCADE
+    	ON UPDATE CASCADE,
+	FOREIGN KEY(user_id) REFERENCES intranet_user(user_id)
+		ON DELETE CASCADE
+    	ON UPDATE CASCADE
+)
+ENGINE = InnoDB; 
+
+
+CREATE TABLE intranet_task (
+task_id INT NOT NULL AUTO_INCREMENT,
+task_name VARCHAR(45) NOT NULL,
+task_start_date DATE,
+task_end_date DATE,
+project_id INT NOT NULL,
+PRIMARY KEY(task_id),
+	FOREIGN KEY(project_id) REFERENCES intranet_project(project_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+)
+ENGINE = InnoDB;
+
+
+
+CREATE TABLE intranet_assigned_task (
+task_assign_id INT NOT NULL AUTO_INCREMENT,
+task_id INT NOT NULL,
+user_id INT NOT NULL,
+PRIMARY KEY(task_assign_id),
+	FOREIGN KEY(user_id) REFERENCES intranet_user(user_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	FOREIGN KEY(task_id) REFERENCES intranet_task(task_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+)
+ENGINE = InnoDB;
+
+
+/****************** CALENDAR STUFF *****************************/
+
+/* FERIAS */
+
+CREATE TABLE intranet_vacation (
+vacation_id INT NOT NULL AUTO_INCREMENT,
+vacation_start_date DATE NOT NULL,
+vacation_end_date DATE NOT NULL,
+user_id INT NOT NULL,
+PRIMARY KEY(vacation_id),
+	FOREIGN KEY(user_id) REFERENCES intranet_user(user_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+)
+ENGINE = InnoDB;
+
+
+/* NOTAS */ 
+
+CREATE TABLE intranet_note (
+note_id INT NOT NULL AUTO_INCREMENT,
+note_name VARCHAR(32) NOT NULL,
+note_content VARCHAR(200) NOT NULL,
+note_type TINYINT DEFAULT 0,
+note_date DATE NOT NULL,
+user_id INT NOT NULL,
+PRIMARY KEY(note_id),
+	FOREIGN KEY(user_id) REFERENCES intranet_user(user_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+)
+ENGINE = InnoDB;
+
+
+CREATE TABLE intranet_color (
+color_id INT NOT NULL AUTO_INCREMENT,
+color_name VARCHAR(32) NOT NULL,
+color_hex VARCHAR(32) NOT NULL,
+PRIMARY KEY(color_id)
+)
+ENGINE = InnoDB;
+
+ALTER TABLE intranet_user ADD color INT NOT NULL DEFAULT 1;
+
+
+ALTER TABLE intranet_user ADD CONSTRAINT fk_color_id FOREIGN KEY (color) REFERENCES intranet_color(color_id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+ALTER TABLE intranet_user
+  DROP FOREIGN KEY fk_color_id;
+
+
+/* vacation - valores repetidos */
+
+SELECT *
+FROM intranet_vacation
+WHERE vacation_start_date IN (
+    SELECT vacation_start_date
+    FROM intranet_vacation
+    GROUP BY vacation_start_date
+    HAVING COUNT(vacation_id) > 1
+)
+
+
+SELECT iat.*, it.task_name
+FROM intranet_assigned_task AS iat
+INNER JOIN intranet_task AS it USING(task_id)
+WHERE iat.user_id = 6 ORDER BY task_end_date ASC;
+
+SELECT ip.project_name, iap. it.task_name, it.project_id, iat.*, iap.*
+FROM intranet_project AS ip
+
+INNER JOIN intranet_task AS it
+INNER JOIN intranet_assigned_task AS iat USING(task_id)
+INNER JOIN iap
+WHERE iat.user_id =6 ;
+
+
+SELECT it.task_name, ip.project_name 
+FROM intranet_task AS it
+INNER JOIN intranet_project AS ip USING(project_id) 
+WHERE it.task_id = 1;
+
+
+
+
+
+
+
+/*  WIKI TEST */
+
+
+INSERT INTO intranet_wiki_category(category_name) VALUES('HELP');
+	
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('Another help', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 1, 6);
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('Lorem ipsum', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 1, 6);
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('Policy', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 1, 6);
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('Starting guide', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 1, 6);
+
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('just another', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 1, 6);
+
+
+INSERT INTO intranet_wiki_category(category_name) VALUES('MARKETING');
+
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('Company policy about web marketing', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 2, 6);
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('Facebook marketing', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 2, 6);
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('How to make a marketing plan', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 2, 6);
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('Twitter marketing', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 2, 6);
+
+
+
+INSERT INTO intranet_wiki_category(category_name) VALUES('WORDPRESS');
+
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('Common installation problems', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 5, 6);
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('Company information', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 5, 6);
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('Documentation', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 5, 6);
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('Installing wordpress', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 5, 6);
+
+
+
+
+INSERT INTO intranet_wiki_category(category_name) VALUES('STUFF');
+
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('stuff 1', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 4, 6);
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('stuff 2', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 4, 6);
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('stuff 3', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 4, 6);
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('stuff 4', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 4, 6);
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('stuff 5', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 4, 6);
+
+
+
+
+INSERT INTO intranet_wiki_article(article_name, article_content, category_id, user_id) VALUES ('stuff 4', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.', 7, 6);
+
+
+
+
+/* PROJECT TEST */
+
+
+
+/* PROJECTOS */
+INSERT INTO intranet_project(project_name, project_start_date, project_end_date)
+VALUES('Restaurante', '2017-06-06', '2017-08-08');
+
+INSERT INTO intranet_project(project_name, project_start_date, project_end_date)
+VALUES('Escola', '2017-06-07', '2017-08-09');
+
+INSERT INTO intranet_project(project_name, project_start_date, project_end_date)
+VALUES('Bombeiros', '2017-06-08', '2017-08-10');
+
+
+/* PROJECTOS ASSIGNED */
+INSERT INTO intranet_assigned_project(project_id, user_id)
+VALUES(1, 6);
+INSERT INTO intranet_assigned_project(project_id, user_id)
+VALUES(4, 6);
+INSERT INTO intranet_assigned_project(project_id, user_id)
+VALUES(5, 6);
+INSERT INTO intranet_assigned_project(project_id, user_id)
+VALUES(5, 7);
+
+
+/* TASK TEST */
+
+/* TASKS */
+
+INSERT INTO intranet_task(task_name, task_start_date, task_end_date, project_id)
+VALUES('login restaurante', '2017-06-08', '2017-06-07', 1);
+INSERT INTO intranet_task(task_name, task_start_date, task_end_date, project_id)
+VALUES('login escola', '2017-06-08', '2017-06-08', 4);
+INSERT INTO intranet_task(task_name, task_start_date, task_end_date, project_id)
+VALUES('login bombeiros', '2017-06-08', '2017-06-09', 5);
+
+/* TASKS ASSIGNED */
+
+INSERT INTO intranet_assigned_task(task_id, user_id)
+VALUES(1, 6);
+INSERT INTO intranet_assigned_task(task_id, user_id)
+VALUES(2, 6);
+INSERT INTO intranet_assigned_task(task_id, user_id)
+VALUES(3, 6);
+
+
+
+
+
+SELECT iap.*, ip.project_name, ip.project_start_date, ip.project_end_date , iu.username 
+
+FROM intranet_assigned_project AS iap
+INNER JOIN intranet_project AS ip USING(project_id)
+INNER JOIN intranet_user AS iu USING(user_id)
+WHERE iap.user_id = 6;
+
+
+
+/* query project*/
+SELECT iap.*, ip.project_name, 
+YEAR(ip.project_start_date) AS 'ano_inicio', MONTH(ip.project_start_date) AS 'mes_inicio', DAY(ip.project_start_date) AS 'dia_inicio', 
+YEAR(ip.project_end_date) AS 'ano_fim', MONTH(ip.project_end_date) AS 'mes_fim', DAY(ip.project_end_date) AS 'dia_fim' , iu.username
+
+FROM intranet_assigned_project AS iap
+INNER JOIN intranet_project AS ip USING(project_id)
+INNER JOIN intranet_user AS iu USING(user_id)
+
+WHERE iap.user_id = 6 AND iat.user_id = 6;
+
+
+
+/* query task */
+SELECT iat.*,  it.task_name,
+YEAR(it.task_start_date) AS 'task_ano_inicio', MONTH(it.task_start_date) AS 'task_mes_inicio', DAY(it.task_start_date) AS 'task_dia_inicio',
+YEAR(it.task_end_date) AS 'task_ano_fim', MONTH(it.task_end_date) AS 'task_mes_fim', DAY(it.task_end_date) AS 'task_dia_fim',
+iu.username AS 'task_username', 
+FROM intranet_assigned_task AS iat
+INNER JOIN intranet_task AS it USING(task_id) 
+INNER JOIN intranet_user AS iu USING(user_id)
+WHERE iat.user_id = 6;
+
+iat.user_id AS 'task_user_id',
+
+
+SELECT iat.task_assign_id, iat.task_id, iat.user_id AS 'task_user_id', it.task_name,
+YEAR(it.task_start_date) AS task_ano_inicio, MONTH(it.task_start_date) AS task_mes_inicio, DAY(it.task_start_date) AS task_dia_inicio,
+YEAR(it.task_end_date) AS task_ano_fim, MONTH(it.task_end_date) AS task_mes_fim, DAY(it.task_end_date) AS task_dia_fim,
+iu.username AS task_username
+FROM intranet_assigned_task AS iat
+INNER JOIN intranet_task AS it USING(task_id) 
+INNER JOIN intranet_user AS iu USING(user_id)
+WHERE iat.user_id = 6;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT intranet_wiki_category.*, intranet_wiki_article.* FROM intranet_wiki_category, intranet_wiki_article WHERE intranet_wiki_category.category_id = intranet_wiki_article.category_id;
+
+
+// Não.
+SELECT intranet_wiki_category.*, intranet_wiki_article.* FROM intranet_wiki_category, intranet_wiki_article WHERE intranet_wiki_category.category_id = intranet_wiki_article.category_id AND intranet_wiki_category.category_id = 2;
+
+
+// Talvez
+SELECT article_name FROM intranet_wiki_article WHERE category_id = 2;
+
+
+
+
+
+
+
+
+
+
+
+INSERT INTO intranet_user(username, email, birthday, password, level) VALUES ('admin', 'admin@gmail.com','1900-02-02', 'admin', 0);
+
+
+
+
